@@ -15,6 +15,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "90-Minute Build Session | Custom Sales Tools",
   description: "I build custom sales tools in 90 minutes or I pay you $90. Show your prospects what changes for them if they buy.",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({

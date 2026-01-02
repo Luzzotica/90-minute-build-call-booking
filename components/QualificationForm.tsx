@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import Button from "./Button";
 import ProgressBar from "./ProgressBar";
 import ContactStep from "./steps/ContactStep";
-import BusinessTypeStep from "./steps/BusinessTypeStep";
 import RevenueStep, { isQualified } from "./steps/RevenueStep";
 import ProblemStep from "./steps/ProblemStep";
 import { saveContactToGHL } from "@/lib/ghl";
@@ -16,12 +15,11 @@ export interface FormData {
   lastName: string;
   email: string;
   phone: string;
-  businessType: string;
   revenue: string;
   problem: string;
 }
 
-const TOTAL_STEPS = 4;
+const TOTAL_STEPS = 3;
 
 export default function QualificationForm() {
   const [step, setStep] = useState(1);
@@ -44,10 +42,8 @@ export default function QualificationForm() {
       case 1:
         return await trigger(["firstName", "lastName", "email", "phone"]);
       case 2:
-        return await trigger("businessType");
-      case 3:
         return await trigger("revenue");
-      case 4:
+      case 3:
         return await trigger("problem");
       default:
         return true;
@@ -72,7 +68,7 @@ export default function QualificationForm() {
     }
 
     // After revenue step, check qualification
-    if (step === 3) {
+    if (step === 2) {
       const revenue = getValues("revenue");
       if (!isQualified(revenue)) {
         // Save what we have and redirect to not-ready page
@@ -83,7 +79,6 @@ export default function QualificationForm() {
           lastName: values.lastName,
           email: values.email,
           phone: values.phone,
-          businessType: values.businessType,
           revenue: values.revenue,
         });
         setIsSubmitting(false);
@@ -108,7 +103,6 @@ export default function QualificationForm() {
       lastName: data.lastName,
       email: data.email,
       phone: data.phone,
-      businessType: data.businessType,
       revenue: data.revenue,
       problem: data.problem,
     });
@@ -127,10 +121,8 @@ export default function QualificationForm() {
       case 1:
         return <ContactStep register={register} errors={errors} />;
       case 2:
-        return <BusinessTypeStep register={register} watch={watch} errors={errors} />;
-      case 3:
         return <RevenueStep register={register} watch={watch} errors={errors} />;
-      case 4:
+      case 3:
         return <ProblemStep register={register} errors={errors} />;
       default:
         return null;

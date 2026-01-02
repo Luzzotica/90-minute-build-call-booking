@@ -11,29 +11,24 @@ interface RevenueStepProps {
 
 const revenueRanges = [
   {
-    value: "under-5k",
-    label: "Under $5,000/month",
-    qualified: false,
+    value: "under-10k",
+    label: "Under $10K/mo",
   },
   {
-    value: "5k-10k",
-    label: "$5,000 - $10,000/month",
-    qualified: false,
+    value: "10k-100k",
+    label: "$10K - $100K",
   },
   {
-    value: "10k-25k",
-    label: "$10,000 - $25,000/month",
-    qualified: true,
+    value: "100k-500k",
+    label: "$100K - $500K",
   },
   {
-    value: "25k-50k",
-    label: "$25,000 - $50,000/month",
-    qualified: true,
+    value: "500k-1m",
+    label: "$500K - $1M",
   },
   {
-    value: "50k-plus",
-    label: "$50,000+/month",
-    qualified: true,
+    value: "1m-plus",
+    label: "$1M+",
   },
 ];
 
@@ -101,7 +96,7 @@ export default function RevenueStep({ register, watch, errors }: RevenueStepProp
 }
 
 export function isQualified(revenue: string | undefined): boolean {
-  const qualifiedRanges = ["10k-25k", "25k-50k", "50k-plus"];
-  return revenue ? qualifiedRanges.includes(revenue) : false;
+  // Only "under-10k" is disqualified - all others qualify
+  return revenue ? revenue !== "under-10k" : false;
 }
 

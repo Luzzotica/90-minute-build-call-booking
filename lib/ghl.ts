@@ -5,7 +5,6 @@ export interface ContactData {
   lastName: string;
   email: string;
   phone: string;
-  businessType?: string;
   revenue?: string;
   problem?: string;
 }
@@ -55,9 +54,6 @@ export async function saveContactToGHL(data: ContactData): Promise<{ success: bo
 
     // Build custom fields for qualification data
     const customFields: { key: string; value: string }[] = [];
-    if (data.businessType) {
-      customFields.push({ key: "business_type", value: data.businessType });
-    }
     if (data.revenue) {
       customFields.push({ key: "monthly_revenue", value: data.revenue });
     }
