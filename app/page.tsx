@@ -19,11 +19,15 @@ export default function Home() {
               before they buy.
             </p>
 
+            <p className="text-xl text-muted mb-8 max-w-xl mx-auto">
+              If I can't help you, you'll be done in 1 minute.
+            </p>
+
             <Link
               href="/qualify"
               className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-accent hover:bg-accent-hover rounded-xl shadow-lg shadow-accent/25 hover:shadow-xl hover:shadow-accent/30 transition-all duration-200"
             >
-              See If We&apos;re a Fit
+              Let&apos;s Do It!
               <svg
                 className="ml-2 w-5 h-5"
                 fill="none"
@@ -60,7 +64,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="font-semibold text-foreground mb-2">Built in 90 Minutes</h3>
-              <p className="text-muted text-sm">Not weeks. Not months. A working tool you can use with prospects that same day.</p>
+              <p className="text-muted text-sm">Not weeks. Not months. A working tool you can use with prospects that same day. (And some people have.)</p>
             </div>
 
             <div className="animate-fade-in delay-400 opacity-0" style={{ animationFillMode: "forwards" }}>
@@ -70,7 +74,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="font-semibold text-foreground mb-2">Risk-Free Guarantee</h3>
-              <p className="text-muted text-sm">If we don&apos;t finish in 90 minutes, I pay you $90. Simple as that.</p>
+              <p className="text-muted text-sm">If we don&apos;t build something that works in 90 minutes, I pay you $90. Simple as that. If this happens, I will need your venmo.</p>
             </div>
           </div>
         </div>
