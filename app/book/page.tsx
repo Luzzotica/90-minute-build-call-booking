@@ -16,6 +16,16 @@ export default function BookPage() {
     
     const parsed = JSON.parse(data);
     
+    // Map businessType to readable industry text
+    const industryMap: Record<string, string> = {
+      coaching: "Coaching / Consulting",
+      agency: "Agency / Done-for-You",
+      ecommerce: "E-commerce / Products",
+      saas: "SaaS / Software",
+      services: "Professional Services",
+      other: "Other",
+    };
+    
     // Build GHL booking URL with query parameters
     const params = new URLSearchParams();
     if (parsed.firstName) params.append("first_name", parsed.firstName);
@@ -23,6 +33,10 @@ export default function BookPage() {
     if (parsed.email) params.append("email", parsed.email);
     if (parsed.phone) params.append("phone", parsed.phone);
     if (parsed.problem) params.append("90_minute_build_problem", parsed.problem);
+    if (parsed.businessType) {
+      const industryText = industryMap[parsed.businessType] || parsed.businessType;
+      params.append("industry", industryText);
+    }
     
     const queryString = params.toString();
     const bookingUrl = `https://api.leadconnectorhq.com/widget/booking/rHmygqXSyRkFGsqUthxp${queryString ? `?${queryString}` : ""}`;
