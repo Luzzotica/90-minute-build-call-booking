@@ -1,36 +1,115 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 90-Minute Build - Qualification Flow
 
-## Getting Started
+A Next.js qualification flow website that guides prospects through a series of questions before booking a 90-minute build session.
 
-First, run the development server:
+## Features
+
+- **Multi-step qualification form** - Collects contact info, business type, revenue, and sales challenges
+- **Revenue-based qualification** - Only allows prospects making $10K+/month to book
+- **GHL Integration** - Saves contacts to GoHighLevel CRM automatically
+- **Booking calendar embed** - Integrates your GHL booking widget
+- **Post-booking confirmation** - Shows prospects exactly what to expect in the session
+
+## Flow
+
+1. **Contact Info** → Name, email, phone (saved to GHL immediately)
+2. **Business Type** → Multiple choice selection
+3. **Revenue Question** → Qualification checkpoint ($10K+ required)
+4. **Problem Description** → Free text about their sales challenge
+5. **Booking Calendar** → Embedded GHL calendar widget
+6. **Confirmation** → "What We'll Build Together" explanation
+
+If a prospect doesn't qualify (revenue < $10K), they're redirected to a friendly "not ready yet" page with an alternative resource.
+
+## Setup
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Configure environment variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+GHL_API_KEY=your_ghl_api_key_here
+GHL_LOCATION_ID=your_ghl_location_id_here
+```
+
+**Getting your GHL credentials:**
+- Log into GoHighLevel
+- Go to Settings → Business Profile to find your Location ID
+- Go to Settings → API Keys to generate an API key
+
+### 3. Customize the booking calendar
+
+The booking widget is already configured in `app/book/page.tsx`. If you need to change the calendar, update the iframe src URL.
+
+### 4. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Customization
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Update the alternative resource
 
-## Learn More
+Edit `app/not-ready/page.tsx` to change:
+- The free resource link (currently a placeholder `#`)
+- Your LinkedIn profile URL
+- The resource name and description
 
-To learn more about Next.js, take a look at the following resources:
+### Update contact email
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Edit `app/confirmed/page.tsx` to change the email link from `hello@example.com` to your actual email.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Adjust qualification threshold
 
-## Deploy on Vercel
+Edit `components/steps/RevenueStep.tsx` to modify the `isQualified` function and revenue ranges.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Next.js 14** with App Router
+- **Tailwind CSS** for styling
+- **React Hook Form** for form state management
+- **GoHighLevel API** for CRM integration
+
+## Project Structure
+
+```
+app/
+├── page.tsx           # Landing page
+├── qualify/page.tsx   # Qualification form
+├── book/page.tsx      # Booking calendar
+├── confirmed/page.tsx # Post-booking confirmation
+└── not-ready/page.tsx # Disqualified prospects page
+
+components/
+├── QualificationForm.tsx   # Main form with step logic
+├── steps/                  # Individual form steps
+│   ├── ContactStep.tsx
+│   ├── BusinessTypeStep.tsx
+│   ├── RevenueStep.tsx
+│   └── ProblemStep.tsx
+├── ProcessTimeline.tsx     # 90-min session breakdown
+├── ProgressBar.tsx
+└── Button.tsx
+
+lib/
+└── ghl.ts             # GoHighLevel API integration
+```
+
+## Deployment
+
+Deploy to Vercel:
+
+```bash
+npm run build
+```
+
+Don't forget to add your environment variables in your hosting platform's settings.
